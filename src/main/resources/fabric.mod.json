@@ -10,7 +10,7 @@
 	],
 	"contact": {
 		"homepage": "none",
-		"sources": "none"
+		"sources": "https://github.com/Selyss/CrosshairIndicator"
 	},
 	"license": "CC0-1.0",
 	"icon": "assets/crosshairindicator/icon.png",
