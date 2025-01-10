@@ -1,7 +1,7 @@
 {
 	"schemaVersion": 1,
 	"id": "crosshairindicator",
-	"version": "1.21",
+	"version": "1.21.4",
 	"name": "Crosshair Indicator",
 	"description": "This mod causes your crosshair to display differently when you can swing at an Player's Hitbox",
 	"authors": [

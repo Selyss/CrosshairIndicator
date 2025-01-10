@@ -2,7 +2,6 @@ package dog.crosshairindicator.mixin;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.RenderTickCounter;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -25,12 +24,12 @@ public class MixinInGameHud {
 
 	@Unique Identifier textureLocation = Identifier.of("crosshairindicator", "crosshair.png");
 
-	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
+	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
 	private void drawCrosshair(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
 		if (this.client.targetedEntity instanceof PlayerEntity) {
 			RenderSystem.setShaderTexture(0, textureLocation);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			context.drawGuiTexture(RenderLayer::getCrosshair, textureLocation, (context.getScaledWindowWidth() - scaledWidth) / 2, (context.getScaledWindowHeight() - scaledHeight) / 2, scaledWidth, scaledHeight);
+			context.drawTexture(textureLocation, (context.getScaledWindowWidth() - scaledWidth) / 2, (context.getScaledWindowHeight() - scaledHeight) / 2, 0, 0, scaledWidth, scaledHeight);
 		}
 	}
 }
