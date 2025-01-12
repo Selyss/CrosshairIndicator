@@ -16,21 +16,21 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.DrawContext;
 
-
 @Mixin(InGameHud.class)
 public class MixinInGameHud {
 	@Shadow @Final private MinecraftClient client;
-	@Unique int scaledHeight = 9;
-	@Unique int scaledWidth = 9;
+	@Unique Identifier textureLocation = Identifier.of("crosshairindicator", "textures/gui/hud/crosshair.png");
 
-	@Unique Identifier textureLocation = Identifier.of("crosshairindicator", "crosshair.png");
-
-	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V", ordinal = 0))
+	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V"))
 	private void drawCrosshair(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
 		if (this.client.targetedEntity instanceof PlayerEntity) {
 			RenderSystem.setShaderTexture(0, textureLocation);
 			RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-			context.drawGuiTexture(RenderLayer::getCrosshair, textureLocation, (context.getScaledWindowWidth() - scaledWidth) / 2, (context.getScaledWindowHeight() - scaledHeight) / 2, scaledWidth, scaledHeight);
+			int scaledWidth = 15;
+			int scaledHeight = 15;
+
+			context.drawTexture(RenderLayer::getGuiTextured, textureLocation, (context.getScaledWindowWidth() - scaledWidth) / 2, (context.getScaledWindowHeight() - scaledHeight) / 2, 0.0F, 0.0F, scaledWidth, scaledHeight, scaledWidth, scaledHeight);
 		}
 	}
+
 }
