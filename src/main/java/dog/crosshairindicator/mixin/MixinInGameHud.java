@@ -18,13 +18,11 @@ import net.minecraft.client.gui.DrawContext;
 @Mixin(InGameHud.class)
 public class MixinInGameHud {
 	@Shadow @Final private MinecraftClient client;
-	@Unique Identifier CUSTOM_CROSSHAIR = Identifier.of("crosshairindicator", "crosshair.png");
+	@Unique Identifier CUSTOM_CROSSHAIR = Identifier.of("crosshairindicator", "crosshair");
 
 	@Inject(method = "renderCrosshair", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/DrawContext;drawGuiTexture(Ljava/util/function/Function;Lnet/minecraft/util/Identifier;IIII)V" ))
 	private void drawCrosshair(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         if (this.client.targetedEntity != null && this.client.targetedEntity.isAlive()) {
-            RenderSystem.setShaderTexture(0, CUSTOM_CROSSHAIR);
-
             int scaledWidth = 15;
             int scaledHeight = 15;
 
